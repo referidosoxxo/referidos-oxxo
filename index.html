@@ -23,6 +23,13 @@
       text-align: center;
       color: #d40000;
     }
+    p.notice {
+      background: #ffefc1;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
     label {
       font-weight: bold;
       display: block;
@@ -54,8 +61,11 @@
 <body>
   <div class="container">
     <h2>Registro de Referidos OXXO</h2>
-    <form action="https://formspree.io/f/xzdrenyg" method="POST">
+    <p class="notice">
+      Es importante contar con INE vigente y no haber trabajado anteriormente en OXXO. Una vez enviado este formulario, nos pondremos en contacto por WhatsApp para enviarte la vacante más cercana a ti.
+    </p>
 
+    <form id="referidos-form">
       <label>Nombre y Apellido</label>
       <input type="text" name="nombre" required />
 
@@ -71,8 +81,44 @@
         <option value="No">No</option>
       </select>
 
-      <button type="submit">Enviar Referido</button>
+      <button type="submit">Enviar Mi Solicitud</button>
     </form>
   </div>
+
+  <script>
+    // =============================
+    // CONFIGURACIÓN: CAMBIAR ESTO
+    // =============================
+    const scriptURL = "https://script.google.com/macros/s/AKfycbzqc4imezS5wkzzkzyc0r3Q2knLj643fCSXXtPu5GYki4XAtVYmlUWgpwRD-x0Fq3LH/exec"; // <-- Pega la URL de tu Apps Script Web App
+    // =============================
+
+    const form = document.getElementById("referidos-form");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const payload = {};
+      data.forEach((value, key) => payload[key] = value);
+
+      try {
+        const response = await fetch(scriptURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          alert("¡Formulario enviado! Te contactaremos por WhatsApp.");
+          form.reset();
+        } else {
+          alert("Error al enviar el formulario.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Error al enviar el formulario.");
+      }
+    });
+  </script>
 </body>
 </html>
+
