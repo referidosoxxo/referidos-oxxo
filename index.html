@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Referidos OXXO</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f7f7;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 480px;
+      margin: auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #d40000;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #d40000;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b10000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Registro de Referidos OXXO</h2>
+    <form action="https://formspree.io/f/xxxxxxx" method="POST">
+
+      <label>Nombre y Apellido</label>
+      <input type="text" name="nombre" required />
+
+      <label>Número de WhatsApp</label>
+      <input type="tel" name="whatsapp" required />
+
+      <label>Colonia en la que vive</label>
+      <input type="text" name="colonia" required />
+
+      <label>¿Cuenta con INE vigente?</label>
+      <select name="ine" required>
+        <option value="Si">Sí</option>
+        <option value="No">No</option>
+      </select>
+
+      <button type="submit">Enviar Referido</button>
+    </form>
+  </div>
+</body>
+</html>
