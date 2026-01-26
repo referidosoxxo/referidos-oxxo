@@ -5,57 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Registro de Referidos OXXO</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      margin: 0;
-      padding: 20px;
-    }
-    .container {
-      max-width: 480px;
-      margin: auto;
-      background: #fff;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-    h2 {
-      text-align: center;
-      color: #d40000;
-    }
-    p.notice {
-      background: #ffefc1;
-      padding: 12px;
-      border-radius: 6px;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-    input, select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      margin-top: 5px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #d40000;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      margin-top: 20px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #b10000;
-    }
+    body { font-family: Arial,sans-serif; background:#f7f7f7; margin:0; padding:20px; }
+    .container { max-width:480px; margin:auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+    h2 { text-align:center; color:#d40000; }
+    p.notice { background:#ffefc1; padding:12px; border-radius:6px; margin-bottom:20px; font-size:14px; }
+    label { font-weight:bold; display:block; margin-top:15px; }
+    input, select { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; margin-top:5px; }
+    button { width:100%; padding:12px; background:#d40000; color:white; border:none; border-radius:6px; margin-top:20px; font-size:16px; cursor:pointer; }
+    button:hover { background:#b10000; }
   </style>
 </head>
 <body>
@@ -87,24 +44,23 @@
 
   <script>
     // =============================
-    // CONFIGURACIÓN: CAMBIAR ESTO
+    // URL del Web App de Google
     // =============================
-    const scriptURL ="https://script.google.com/macros/s/AKfycbwhjyrSNBAT7bQuOAyliIGTrS5-TBo9qtH-K9ySuE5wnA2kdLOqpiv2mEFUvQBEd83x/exec" // <-- Pega la URL de tu Apps Script Web App
-    // =============================
+    const scriptURL = "https://script.google.com/macros/s/AKfycbwhjyrSNBAT7bQuOAyliIGTrS5-TBo9qtH-K9ySuE5wnA2kdLOqpiv2mEFUvQBEd83x/exec"
 
     const form = document.getElementById("referidos-form");
 
     form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // Evita que recargue la página
+
       const data = new FormData(form);
-      const payload = {};
-      data.forEach((value, key) => payload[key] = value);
+      const searchParams = new URLSearchParams();
+      data.forEach((value, key) => searchParams.append(key, value));
 
       try {
         const response = await fetch(scriptURL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+          body: searchParams
         });
 
         if (response.ok) {
@@ -121,4 +77,3 @@
   </script>
 </body>
 </html>
-
