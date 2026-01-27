@@ -37,7 +37,6 @@
       display: block;
       margin-top: 15px;
       font-weight: bold;
-      color: #000;
       text-align: left;
     }
     input[type="text"], select {
@@ -65,6 +64,13 @@
     }
     .success {
       margin-top: 15px;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
+    .warning {
+      margin-top: 15px;
+      color: #b2050f;
       font-weight: bold;
       text-align: center;
     }
@@ -72,6 +78,7 @@
 </head>
 <body>
   <div class="container">
+    
     <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
     
     <h1>¡Únete a OXXO hoy mismo y empieza a ganar!</h1>
@@ -93,7 +100,6 @@
         <option value="No">No</option>
       </select>
 
-      <!-- NUEVO CAMPO -->
       <label for="reingreso">¿Has trabajado anteriormente en OXXO?</label>
       <select id="reingreso" name="reingreso" required>
         <option value="">Selecciona</option>
@@ -102,48 +108,13 @@
       </select>
 
       <button type="submit">Enviar mi solicitud</button>
-      <div class="success" id="successMsg"></div>
+      <div id="responseMsg"></div>
     </form>
   </div>
 
-   <script>
-  const form = document.getElementById("oxxoForm");
-  const successMsg = document.getElementById("successMsg");
+  <script>
+    const form = document.getElementById("oxxoForm");
+    const responseMsg = document.getElementById("responseMsg");
 
-  form.addEventListener("submit", function(e) {
-    e.preventDefault();
-
-    const reingreso = document.getElementById("reingreso").value;
-
-    const data = new FormData(form);
-    const params = new URLSearchParams(data).toString();
-
-    fetch("https://script.google.com/macros/s/AKfycby13_tnGXmWLpmv8fUXzXiYBviyM14HQMVmZ1DGj3YqnFHKDl-HiXslRYlQvDPpbz8u/exec", {
-      method: "POST",
-      body: params,
-      headers: { "Content-Type": "application/x-www-form-urlencoded" }
-    })
-    .then(response => response.text())
-    .then(data => {
-
-      if (reingreso === "Sí") {
-        successMsg.style.color = "red";
-        successMsg.textContent =
-          "Agradecemos tu interés de volver a nuestro equipo, pero de momento no se están considerando recontrataciones, pero te consideraremos en cuanto lo hagamos.";
-      } else {
-        successMsg.style.color = "green";
-        successMsg.textContent =
-          "¡Solicitud enviada con éxito! En breve nos ponemos en contacto por Whatsapp";
-      }
-
-      form.reset();
-    })
-    .catch(error => {
-      successMsg.style.color = "red";
-      successMsg.textContent = "Error al enviar, intenta de nuevo.";
-      console.error(error);
-    });
-  });
-</script>
-</body>
-</html>
+    form.addEventListener("submit", function(e) {
+      e.preventDefa
