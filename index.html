@@ -1,78 +1,122 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Registro de Referidos OXXO</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario OXXO</title>
   <style>
-    body { font-family: Arial,sans-serif; background:#f7f7f7; margin:0; padding:20px; }
-    .container { max-width:480px; margin:auto; background:#fff; padding:20px; border-radius:12px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-    h2 { text-align:center; color:#d40000; }
-    p.notice { background:#ffefc1; padding:12px; border-radius:6px; margin-bottom:20px; font-size:14px; }
-    label { font-weight:bold; display:block; margin-top:15px; }
-    input, select { width:100%; padding:10px; border-radius:6px; border:1px solid #ccc; margin-top:5px; }
-    button { width:100%; padding:12px; background:#d40000; color:white; border:none; border-radius:6px; margin-top:20px; font-size:16px; cursor:pointer; }
-    button:hover { background:#b10000; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff;
+      color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #ffcc00; /* amarillo OXXO */
+      padding: 40px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    h1 {
+      text-align: center;
+      color: #e30613; /* rojo OXXO */
+      margin-bottom: 20px;
+      font-size: 1.5em;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+      color: #000;
+    }
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 2px solid #e30613;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #e30613; /* rojo OXXO */
+      color: #fff;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #b2050f;
+    }
+    .success {
+      margin-top: 15px;
+      color: green;
+      font-weight: bold;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Registro de Referidos OXXO</h2>
-    <p class="notice">
-      Es importante contar con INE vigente y no haber trabajado anteriormente en OXXO. Una vez enviado este formulario, nos pondremos en contacto por WhatsApp para enviarte la vacante más cercana a ti.
-    </p>
+    <h1>¡Únete a OXXO hoy mismo y empieza a ganar!</h1>
+    <form id="oxxoForm">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre" required>
 
-    <form id="referidos-form">
-      <label>Nombre y Apellido</label>
-      <input type="text" name="nombre" required />
+      <label for="whatsapp">WhatsApp</label>
+      <input type="text" id="whatsapp" name="whatsapp" required pattern="\d{10}" title="Ingresa 10 dígitos">
 
-      <label>Número de WhatsApp</label>
-      <input type="tel" name="whatsapp" required />
+      <label for="colonia">Colonia</label>
+      <input type="text" id="colonia" name="colonia" required>
 
-      <label>Colonia en la que vive</label>
-      <input type="text" name="colonia" required />
-
-      <label>¿Cuenta con INE vigente?</label>
-      <select name="ine" required>
-        <option value="Si">Sí</option>
+      <label for="ine">¿Cuentas con INE?</label>
+      <select id="ine" name="ine" required>
+        <option value="">Selecciona</option>
+        <option value="Sí">Sí</option>
         <option value="No">No</option>
       </select>
 
-      <button type="submit">Enviar Mi Solicitud</button>
+      <button type="submit">Enviar solicitud</button>
+      <div class="success" id="successMsg"></div>
     </form>
   </div>
 
   <script>
-    // =============================
-    // URL del Web App de Google
-    // =============================
-    const scriptURL = "https://script.google.com/macros/s/AKfycbwhjyrSNBAT7bQuOAyliIGTrS5-TBo9qtH-K9ySuE5wnA2kdLOqpiv2mEFUvQBEd83x/exec";
+    const form = document.getElementById("oxxoForm");
+    const successMsg = document.getElementById("successMsg");
 
-    const form = document.getElementById("referidos-form");
-
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault(); // Evita que recargue la página
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
 
       const data = new FormData(form);
-      const searchParams = new URLSearchParams();
-      data.forEach((value, key) => searchParams.append(key, value));
+      const params = new URLSearchParams(data).toString();
 
-      try {
-        const response = await fetch(scriptURL, {
-          method: "POST",
-          body: searchParams
-        });
-
-        if (response.ok) {
-          alert("¡Formulario enviado! Te contactaremos por WhatsApp.");
-          form.reset();
-        } else {
-          alert("Error al enviar el formulario.");
+      fetch("https://script.google.com/macros/s/AKfycbxoKUfJNOB1KLVR3tX_A0Wc0OWERipfBbifVWdYvkC9CsFtEYdb6L3T7wBCH2Yur1UX/exec", { // <- pega aquí tu URL del Apps Script
+        method: "POST",
+        body: params,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"
         }
-      } catch (err) {
-        console.error(err);
-        alert("Error al enviar el formulario.");
-      }
+      })
+      .then(response => response.text())
+      .then(data => {
+        successMsg.textContent = "¡Solicitud enviada con éxito!";
+        form.reset();
+      })
+      .catch(error => {
+        successMsg.textContent = "Error al enviar, intenta de nuevo.";
+        console.error(error);
+      });
     });
   </script>
 </body>
