@@ -22,9 +22,13 @@
       width: 90%;
       max-width: 400px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: center; /* Centrar todo dentro del container */
+    }
+    .logo {
+      width: 80px; /* tamaño pequeño */
+      margin-bottom: 15px;
     }
     h1 {
-      text-align: center;
       color: #e30613; /* rojo OXXO */
       margin-bottom: 20px;
       font-size: 1.5em;
@@ -34,6 +38,7 @@
       margin-top: 15px;
       font-weight: bold;
       color: #000;
+      text-align: left;
     }
     input[type="text"], select {
       width: 100%;
@@ -68,7 +73,11 @@
 </head>
 <body>
   <div class="container">
+    <!-- Logo OXXO -->
+    <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
+    
     <h1>¡Únete a OXXO hoy mismo y empieza a ganar!</h1>
+    
     <form id="oxxoForm">
       <label for="nombre">Nombre y apellido</label>
       <input type="text" id="nombre" name="nombre" required>
@@ -101,7 +110,7 @@
       const data = new FormData(form);
       const params = new URLSearchParams(data).toString();
 
-      fetch("https://script.google.com/macros/s/AKfycbxoKUfJNOB1KLVR3tX_A0Wc0OWERipfBbifVWdYvkC9CsFtEYdb6L3T7wBCH2Yur1UX/exec", { // <- pega aquí tu URL del Apps Script
+      fetch("https://script.google.com/macros/s/AKfycbxoKUfJNOB1KLVR3tX_A0Wc0OWERipfBbifVWdYvkC9CsFtEYdb6L3T7wBCH2Yur1UX/exec", {
         method: "POST",
         body: params,
         headers: {
