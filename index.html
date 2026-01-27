@@ -1,132 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Referidos OXXO</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #fff;
-      color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      background: #ffea96; /* amarillo OXXO */
-      padding: 40px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 400px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      text-align: center; /* Centrar todo dentro del container */
-    }
-    .logo {
-      width: 80px; /* tamaño pequeño */
-      margin-bottom: 15px;
-    }
-    h1 {
-      color: #e30613; /* rojo OXXO */
-      margin-bottom: 20px;
-      font-size: 1.5em;
-    }
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      color: #000;
-      text-align: left;
-    }
-    input[type="text"], select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 2px solid #e30613;
-      border-radius: 5px;
-      font-size: 1em;
-    }
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 12px;
-      background-color: #e30613; /* rojo OXXO */
-      color: #fff;
-      font-size: 1.1em;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #b2050f;
-    }
-    .success {
-      margin-top: 15px;
-      color: green;
-      font-weight: bold;
-      text-align: center;
-    }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <!-- Logo OXXO -->
-    <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
-    
-    <h1>¡Únete a OXXO hoy mismo y empieza a ganar!</h1>
-    
-    <form id="oxxoForm">
-      <label for="nombre">Nombre y apellido</label>
-      <input type="text" id="nombre" name="nombre" required>
+<script>
+  const form = document.getElementById("oxxoForm");
+  const successMsg = document.getElementById("successMsg");
 
-      <label for="whatsapp">WhatsApp</label>
-      <input type="text" id="whatsapp" name="whatsapp" required pattern="\d{10}" title="Ingresa 10 dígitos">
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
 
-      <label for="colonia">Colonia</label>
-      <input type="text" id="colonia" name="colonia" required>
+    const reingreso = document.getElementById("reingreso").value;
 
-      <label for="ine">¿Cuentas con INE?</label>
-      <select id="ine" name="ine" required>
-        <option value="">Selecciona</option>
-        <option value="Sí">Sí</option>
-        <option value="No">No</option>
-      </select>
+    const data = new FormData(form);
+    const params = new URLSearchParams(data).toString();
 
-      <button type="submit">Enviar mi solicitud</button>
-      <div class="success" id="successMsg"></div>
-    </form>
-  </div>
+    fetch("https://script.google.com/macros/s/AKfycby13_tnGXmWLpmv8fUXzXiYBviyM14HQMVmZ1DGj3YqnFHKDl-HiXslRYlQvDPpbz8u/exec", {
+      method: "POST",
+      body: params,
+      headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    })
+    .then(response => response.text())
+    .then(data => {
 
-  <script>
-    const form = document.getElementById("oxxoForm");
-    const successMsg = document.getElementById("successMsg");
+      if (reingreso === "Sí") {
+        successMsg.style.color = "red";
+        successMsg.textContent =
+          "Agradecemos tu interés de volver a nuestro equipo, pero de momento no se están considerando recontrataciones, pero seras de los primeros en cuanto lo hagamos.";
+      } else {
+        successMsg.style.color = "green";
+        successMsg.textContent =
+          "¡Solicitud enviada con éxito! En breve nos ponemos en contacto por Whatsapp";
+      }
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const data = new FormData(form);
-      const params = new URLSearchParams(data).toString();
-
-      fetch("https://script.google.com/macros/s/AKfycby13_tnGXmWLpmv8fUXzXiYBviyM14HQMVmZ1DGj3YqnFHKDl-HiXslRYlQvDPpbz8u/exec", {
-        method: "POST",
-        body: params,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      })
-      .then(response => response.text())
-      .then(data => {
-        successMsg.textContent = "¡Solicitud enviada con éxito! En breve nos ponemos en contacto por Whatsapp";
-        form.reset();
-      })
-      .catch(error => {
-        successMsg.textContent = "Error al enviar, intenta de nuevo.";
-        console.error(error);
-      });
+      form.reset();
+    })
+    .catch(error => {
+      successMsg.style.color = "red";
+      successMsg.textContent = "Error al enviar, intenta de nuevo.";
+      console.error(error);
     });
-  </script>
-</body>
-</html>
+  });
+</script>
