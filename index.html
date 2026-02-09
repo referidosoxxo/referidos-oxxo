@@ -14,27 +14,32 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 30px 0;
       margin: 0;
     }
+
     .container {
-      background: #ffea96;
+      background: #fff8cc;
       padding: 40px;
-      border-radius: 10px;
+      border-radius: 12px;
       width: 90%;
       max-width: 400px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       text-align: center;
     }
+
     .logo {
       width: 80px;
       margin-bottom: 15px;
     }
+
     h1 {
       color: #e30613;
       margin-bottom: 20px;
       font-size: 1.5em;
     }
+
     label {
       display: block;
       margin-top: 15px;
@@ -42,54 +47,69 @@
       color: #000;
       text-align: left;
     }
+
     input[type="text"], select {
       width: 100%;
       padding: 10px;
       margin-top: 5px;
-      border: 2px solid #e30613;
-      border-radius: 5px;
+      border: 2px solid #ddd;
+      border-radius: 6px;
       font-size: 1em;
+      transition: border 0.3s, box-shadow 0.3s;
     }
+
+    input[type="text"]:focus, select:focus {
+      border: 2px solid #e30613;
+      box-shadow: 0 0 5px rgba(227,6,19,0.4);
+      outline: none;
+    }
+
     button {
       margin-top: 20px;
       width: 100%;
-      padding: 12px;
+      padding: 14px;
       background-color: #e30613;
       color: #fff;
       font-size: 1.1em;
+      font-weight: bold;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s;
+      transition: transform 0.2s, background 0.3s;
     }
+
     button:hover {
       background-color: #b2050f;
+      transform: scale(1.03);
     }
+
     .success {
       margin-top: 15px;
-      color: green;
       font-weight: bold;
       text-align: center;
-      .footer-text {
-  margin-top: 25px;
-  font-size: 11px;
-  color: #555;
-  text-align: center;
-  line-height: 1.5;
-}
+    }
 
+    .footer-text {
+      margin-top: 25px;
+      font-size: 11px;
+      color: #444;
+      text-align: center;
+      line-height: 1.6;
+      opacity: 0.85;
     }
   </style>
 </head>
+
 <body>
   <div class="container">
 
     <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
     
     <h1>¡Únete a OXXO Hermosillo hoy mismo y empieza a ganar!</h1>
-<p style="font-size:14px; color: #0B3D2E; margin-top:10px; font-weight:600;">
-Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía WhatsApp en un plazo máximo de 48 horas hábiles.
-</p>
+
+    <p style="font-size:14px; color: #0B3D2E; margin-top:10px; font-weight:600;">
+      Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía WhatsApp en un plazo máximo de 48 horas hábiles.
+    </p>
 
     <form id="oxxoForm">
 
@@ -109,7 +129,6 @@ Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía What
         <option value="No">No</option>
       </select>
 
-      <!-- NUEVO CAMPO -->
       <label for="reingreso">¿Has trabajado anteriormente en OXXO?</label>
       <select id="reingreso" name="reingreso" required>
         <option value="">Selecciona</option>
@@ -121,12 +140,13 @@ Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía What
       <div class="success" id="successMsg"></div>
 
     </form>
+
     <p class="footer-text">
-Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo. 
-No es necesario enviar el formulario más de una vez. 
-Una vez enviado, solo debes esperar nuestro mensaje vía WhatsApp en un plazo máximo de 48 horas hábiles. 
-No contratamos a menores de edad y es indispensable contar con INE vigente para la contratación.
-</p>
+      Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo. 
+      No es necesario enviar el formulario más de una vez. 
+      Una vez enviado, solo debes esperar nuestro mensaje vía WhatsApp en un plazo máximo de 48 horas hábiles. 
+      No contratamos a menores de edad y es indispensable contar con INE vigente para la contratación.
+    </p>
 
   </div>
 
@@ -159,16 +179,18 @@ No contratamos a menores de edad y es indispensable contar con INE vigente para 
       .then(data => {
         if (reingresoValue !== "Sí") {
           successMsg.textContent =
-            "¡Solicitud enviada con éxito! En breve nos ponemos en contacto por Whatsapp";
+            "¡Solicitud enviada con éxito! En breve nos ponemos en contacto por WhatsApp";
+          successMsg.style.color = "green";
         }
-        successMsg.style.color = "green";
         form.reset();
       })
       .catch(error => {
         successMsg.textContent = "Error al enviar, intenta de nuevo.";
+        successMsg.style.color = "red";
         console.error(error);
       });
     });
   </script>
+
 </body>
 </html>
