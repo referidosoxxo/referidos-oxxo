@@ -100,8 +100,6 @@ button:hover {
   line-height: 1.6;
 }
 
-/* MODAL GENERAL */
-
 .modal {
   display: none;
   position: fixed;
@@ -154,7 +152,6 @@ button:hover {
   from { transform: scale(0.8); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
-
 </style>
 </head>
 
@@ -184,7 +181,7 @@ button:hover {
       <input type="text" name="colonia" required>
 
       <label>¿Cuentas con INE?</label>
-      <select name="ine" required>
+      <select name="ine" id="ine" required>
         <option value="">Selecciona</option>
         <option value="Sí">Sí</option>
         <option value="No">No</option>
@@ -209,7 +206,6 @@ button:hover {
   </div>
 </div>
 
-<!-- MODAL DINÁMICO -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <div id="modalIcon"></div>
@@ -232,7 +228,26 @@ let autoCloseTimer;
 form.addEventListener("submit", function(e){
   e.preventDefault();
 
+  const ineValue = document.getElementById("ine").value;
   const reingresoValue = document.getElementById("reingreso").value;
+
+  // 🚨 SI NO TIENE INE → NO ENVÍA A GOOGLE SHEETS
+  if (ineValue === "No") {
+
+    modalIcon.innerHTML = '<div class="error-icon">⚠</div>';
+    modalTitle.textContent = "Atención Postulante";
+    modalTitle.style.color = "#e30613";
+    modalMessage.textContent = "Es importante ser mayor de 18 años y contar con tu INE vigente para comenzar con tu postulación. Recuerda que tu INE es un documento indispensable y sin él no podremos realizar ninguna contratación.";
+
+    modal.style.display = "flex";
+
+    autoCloseTimer = setTimeout(() => {
+      closeModal();
+    }, 30000);
+
+    return; // 🔥 AQUÍ SE DETIENE Y NO ENVÍA NADA
+  }
+
   const data = new FormData(form);
   const params = new URLSearchParams(data).toString();
 
@@ -264,7 +279,7 @@ form.addEventListener("submit", function(e){
 
     autoCloseTimer = setTimeout(() => {
       closeModal();
-    }, 30000); // 30 segundos
+    }, 30000);
 
     form.reset();
 
