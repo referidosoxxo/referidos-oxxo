@@ -8,61 +8,73 @@
 
   <style>
     body {
-  font-family: Arial, sans-serif;
-  background: linear-gradient(135deg, #f5f5f5, #e9e9e9);
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  padding: 30px 0;
-  margin: 0;
-}
-
-    
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #8b0000, #b30000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 0;
+      margin: 0;
+    }
 
     .container {
-      background: #fff8cc;
-      padding: 40px;
-      border-radius: 12px;
+      background: #ffffff;
+      border-radius: 14px;
       width: 90%;
-      max-width: 400px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      max-width: 420px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+      overflow: hidden;
       text-align: center;
     }
 
+    .header {
+      background: #e30613;
+      padding: 25px 20px;
+    }
+
     .logo {
-      width: 80px;
-      margin-bottom: 15px;
+      width: 90px;
+    }
+
+    .content {
+      padding: 30px;
     }
 
     h1 {
       color: #e30613;
+      font-size: 1.4em;
+      margin-bottom: 15px;
+    }
+
+    .info-text {
+      font-size: 14px;
+      color: #0B3D2E;
+      font-weight: 600;
       margin-bottom: 20px;
-      font-size: 1.5em;
     }
 
     label {
       display: block;
       margin-top: 15px;
       font-weight: bold;
-      color: #000;
       text-align: left;
+      color: #333;
     }
 
     input[type="text"], select {
       width: 100%;
-      padding: 10px;
+      padding: 11px;
       margin-top: 5px;
       border: 2px solid #ddd;
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 1em;
-      transition: border 0.3s, box-shadow 0.3s;
+      transition: 0.3s;
     }
 
     input[type="text"]:focus, select:focus {
       border: 2px solid #e30613;
-      box-shadow: 0 0 5px rgba(227,6,19,0.4);
+      box-shadow: 0 0 8px rgba(227,6,19,0.3);
       outline: none;
     }
 
@@ -77,12 +89,12 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: transform 0.2s, background 0.3s;
+      transition: 0.3s;
     }
 
     button:hover {
       background-color: #b2050f;
-      transform: scale(1.03);
+      transform: translateY(-2px);
     }
 
     .success {
@@ -94,61 +106,66 @@
     .footer-text {
       margin-top: 25px;
       font-size: 11px;
-      color: #444;
-      text-align: center;
+      color: #666;
       line-height: 1.6;
-      opacity: 0.85;
     }
   </style>
 </head>
 
 <body>
+
   <div class="container">
 
-    <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
-    
-    <h1>¡Únete a OXXO Hermosillo hoy mismo y empieza a ganar!</h1>
+    <div class="header">
+      <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
+    </div>
 
-    <p style="font-size:14px; color: #0B3D2E; margin-top:10px; font-weight:600;">
-      Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía WhatsApp en un plazo máximo de 48 horas hábiles.
-    </p>
+    <div class="content">
 
-    <form id="oxxoForm">
+      <h1>¡Únete a OXXO Hermosillo hoy mismo y empieza a ganar!</h1>
 
-      <label for="nombre">Nombre y apellido</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <p class="info-text">
+        Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía WhatsApp en un plazo máximo de 48 horas hábiles.
+      </p>
 
-      <label for="whatsapp">WhatsApp</label>
-      <input type="text" id="whatsapp" name="whatsapp" required pattern="\d{10}" title="Ingresa 10 dígitos">
+      <form id="oxxoForm">
 
-      <label for="colonia">Colonia</label>
-      <input type="text" id="colonia" name="colonia" required>
+        <label for="nombre">Nombre y apellido</label>
+        <input type="text" id="nombre" name="nombre" required>
 
-      <label for="ine">¿Cuentas con INE?</label>
-      <select id="ine" name="ine" required>
-        <option value="">Selecciona</option>
-        <option value="Sí">Sí</option>
-        <option value="No">No</option>
-      </select>
+        <label for="whatsapp">WhatsApp</label>
+        <input type="text" id="whatsapp" name="whatsapp" required pattern="\d{10}" title="Ingresa 10 dígitos">
 
-      <label for="reingreso">¿Has trabajado anteriormente en OXXO?</label>
-      <select id="reingreso" name="reingreso" required>
-        <option value="">Selecciona</option>
-        <option value="Sí">Sí</option>
-        <option value="No">No</option>
-      </select>
+        <label for="colonia">Colonia</label>
+        <input type="text" id="colonia" name="colonia" required>
 
-      <button type="submit">Enviar mi solicitud</button>
-      <div class="success" id="successMsg"></div>
+        <label for="ine">¿Cuentas con INE?</label>
+        <select id="ine" name="ine" required>
+          <option value="">Selecciona</option>
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+        </select>
 
-    </form>
+        <label for="reingreso">¿Has trabajado anteriormente en OXXO?</label>
+        <select id="reingreso" name="reingreso" required>
+          <option value="">Selecciona</option>
+          <option value="Sí">Sí</option>
+          <option value="No">No</option>
+        </select>
 
-    <p class="footer-text">
-      Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo. 
-      No es necesario enviar el formulario más de una vez. 
-      Una vez enviado, solo debes esperar nuestro mensaje vía WhatsApp en un plazo máximo de 48 horas hábiles. 
-      No contratamos a menores de edad y es indispensable contar con INE vigente para la contratación.
-    </p>
+        <button type="submit">Enviar mi solicitud</button>
+        <div class="success" id="successMsg"></div>
+
+      </form>
+
+      <p class="footer-text">
+        Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo.
+        No es necesario enviar el formulario más de una vez.
+        Una vez enviado, solo debes esperar nuestro mensaje vía WhatsApp en un plazo máximo de 48 horas hábiles.
+        No contratamos a menores de edad y es indispensable contar con INE vigente para la contratación.
+      </p>
+
+    </div>
 
   </div>
 
