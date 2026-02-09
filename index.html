@@ -1,215 +1,272 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Referidos OXXO HMO</title>
-  <link rel="icon" type="image/png" href="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Referidos OXXO HMO</title>
+<link rel="icon" type="image/png" href="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #8b0000, #b30000);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      padding: 40px 0;
-      margin: 0;
-    }
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #8b0000, #b30000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 0;
+  margin: 0;
+}
 
-    .container {
-      background: #ffffff;
-      border-radius: 14px;
-      width: 90%;
-      max-width: 420px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-      overflow: hidden;
-      text-align: center;
-    }
+.container {
+  background: #ffffff;
+  border-radius: 14px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+  overflow: hidden;
+  text-align: center;
+}
 
-    .header {
-      background: #e30613;
-      padding: 25px 20px;
-    }
+.header {
+  background: #e30613;
+  padding: 25px 20px;
+}
 
-    .logo {
-      width: 90px;
-    }
+.logo {
+  width: 90px;
+}
 
-    .content {
-      padding: 30px;
-    }
+.content {
+  padding: 30px;
+}
 
-    h1 {
-      color: #e30613;
-      font-size: 1.4em;
-      margin-bottom: 15px;
-    }
+h1 {
+  color: #e30613;
+  font-size: 1.4em;
+  margin-bottom: 15px;
+}
 
-    .info-text {
-      font-size: 14px;
-      color: #0B3D2E;
-      font-weight: 600;
-      margin-bottom: 20px;
-    }
+.info-text {
+  font-size: 14px;
+  color: #0B3D2E;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
 
-    label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: left;
-      color: #333;
-    }
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: left;
+  color: #333;
+}
 
-    input[type="text"], select {
-      width: 100%;
-      padding: 11px;
-      margin-top: 5px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 1em;
-      transition: 0.3s;
-    }
+input[type="text"], select {
+  width: 100%;
+  padding: 11px;
+  margin-top: 5px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1em;
+  transition: 0.3s;
+}
 
-    input[type="text"]:focus, select:focus {
-      border: 2px solid #e30613;
-      box-shadow: 0 0 8px rgba(227,6,19,0.3);
-      outline: none;
-    }
+input:focus, select:focus {
+  border: 2px solid #e30613;
+  box-shadow: 0 0 8px rgba(227,6,19,0.3);
+  outline: none;
+}
 
-    button {
-      margin-top: 20px;
-      width: 100%;
-      padding: 14px;
-      background-color: #e30613;
-      color: #fff;
-      font-size: 1.1em;
-      font-weight: bold;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px;
+  background-color: #e30613;
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    button:hover {
-      background-color: #b2050f;
-      transform: translateY(-2px);
-    }
+button:hover {
+  background-color: #b2050f;
+  transform: translateY(-2px);
+}
 
-    .success {
-      margin-top: 15px;
-      font-weight: bold;
-      text-align: center;
-    }
+.footer-text {
+  margin-top: 25px;
+  font-size: 11px;
+  color: #666;
+  line-height: 1.6;
+}
 
-    .footer-text {
-      margin-top: 25px;
-      font-size: 11px;
-      color: #666;
-      line-height: 1.6;
-    }
-  </style>
+/* MODAL NIVEL PRO */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  background: rgba(0,0,0,0.65);
+  backdrop-filter: blur(3px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 35px 25px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 360px;
+  text-align: center;
+  box-shadow: 0 15px 45px rgba(0,0,0,0.35);
+  animation: popUp 0.4s ease;
+}
+
+.modal-content h2 {
+  color: #e30613;
+  margin-bottom: 10px;
+}
+
+.modal-content p {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  background-color: #e30613;
+  padding: 10px 22px;
+  border-radius: 8px;
+}
+
+.modal-content button:hover {
+  background-color: #b2050f;
+}
+
+.check-icon {
+  font-size: 48px;
+  color: #28a745;
+  margin-bottom: 15px;
+}
+
+@keyframes popUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+</style>
 </head>
 
 <body>
 
-  <div class="container">
-
-    <div class="header">
-      <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" alt="Logo OXXO" class="logo">
-    </div>
-
-    <div class="content">
-
-      <h1>¡Únete a OXXO Hermosillo hoy mismo y empieza a ganar!</h1>
-
-      <p class="info-text">
-        Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía WhatsApp en un plazo máximo de 48 horas hábiles.
-      </p>
-
-      <form id="oxxoForm">
-
-        <label for="nombre">Nombre y apellido</label>
-        <input type="text" id="nombre" name="nombre" required>
-
-        <label for="whatsapp">WhatsApp</label>
-        <input type="text" id="whatsapp" name="whatsapp" required pattern="\d{10}" title="Ingresa 10 dígitos">
-
-        <label for="colonia">Colonia</label>
-        <input type="text" id="colonia" name="colonia" required>
-
-        <label for="ine">¿Cuentas con INE?</label>
-        <select id="ine" name="ine" required>
-          <option value="">Selecciona</option>
-          <option value="Sí">Sí</option>
-          <option value="No">No</option>
-        </select>
-
-        <label for="reingreso">¿Has trabajado anteriormente en OXXO?</label>
-        <select id="reingreso" name="reingreso" required>
-          <option value="">Selecciona</option>
-          <option value="Sí">Sí</option>
-          <option value="No">No</option>
-        </select>
-
-        <button type="submit">Enviar mi solicitud</button>
-        <div class="success" id="successMsg"></div>
-
-      </form>
-
-      <p class="footer-text">
-        Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo.
-        No es necesario enviar el formulario más de una vez.
-        Una vez enviado, solo debes esperar nuestro mensaje vía WhatsApp en un plazo máximo de 48 horas hábiles.
-        No contratamos a menores de edad y es indispensable contar con INE vigente para la contratación.
-      </p>
-
-    </div>
-
+<div class="container">
+  <div class="header">
+    <img src="https://res.cloudinary.com/ordering2/image/upload/v1609381269/fasty/rttbehxhc4dq1veizkvi.png" class="logo">
   </div>
 
-  <script>
-    const form = document.getElementById("oxxoForm");
-    const successMsg = document.getElementById("successMsg");
+  <div class="content">
+    <h1>¡Únete a OXXO Hermosillo hoy mismo y empieza a ganar!</h1>
 
-    form.addEventListener("submit", function(e) {
-      e.preventDefault();
+    <p class="info-text">
+      Al enviar tu formulario, nuestro equipo se pondrá en contacto contigo vía WhatsApp en un plazo máximo de 48 horas hábiles.
+    </p>
 
-      const reingresoValue = document.getElementById("reingreso").value;
+    <form id="oxxoForm">
 
-      if (reingresoValue === "Sí") {
-        successMsg.style.color = "red";
-        successMsg.textContent =
-          "Agradecemos tu interés de volver a nuestro equipo, pero de momento no se están considerando recontrataciones. Te contactaremos pronto si esto cambia.";
-      }
+      <label>Nombre y apellido</label>
+      <input type="text" name="nombre" required>
 
-      const data = new FormData(form);
-      const params = new URLSearchParams(data).toString();
+      <label>WhatsApp</label>
+      <input type="text" name="whatsapp" required pattern="\d{10}" title="Ingresa 10 dígitos">
 
-      fetch("https://script.google.com/macros/s/AKfycbxUp0DPdkkQR396VwwmC_U985DFcCXSYfoYRbKiA3hl402cIz1QcmdFRDUt2vlzXTs-/exec", {
-        method: "POST",
-        body: params,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      })
-      .then(response => response.text())
-      .then(data => {
-        if (reingresoValue !== "Sí") {
-          successMsg.textContent =
-            "¡Solicitud enviada con éxito! En breve nos ponemos en contacto por WhatsApp";
-          successMsg.style.color = "green";
-        }
-        form.reset();
-      })
-      .catch(error => {
-        successMsg.textContent = "Error al enviar, intenta de nuevo.";
-        successMsg.style.color = "red";
-        console.error(error);
-      });
-    });
-  </script>
+      <label>Colonia</label>
+      <input type="text" name="colonia" required>
+
+      <label>¿Cuentas con INE?</label>
+      <select name="ine" required>
+        <option value="">Selecciona</option>
+        <option value="Sí">Sí</option>
+        <option value="No">No</option>
+      </select>
+
+      <label>¿Has trabajado anteriormente en OXXO?</label>
+      <select name="reingreso" id="reingreso" required>
+        <option value="">Selecciona</option>
+        <option value="Sí">Sí</option>
+        <option value="No">No</option>
+      </select>
+
+      <button type="submit">Enviar mi solicitud</button>
+
+    </form>
+
+    <p class="footer-text">
+      Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo.
+      No es necesario enviar el formulario más de una vez.
+      No contratamos a menores de edad y es indispensable contar con INE vigente.
+    </p>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="successModal" class="modal">
+  <div class="modal-content">
+    <div class="check-icon">✔</div>
+    <h2>Solicitud enviada con éxito</h2>
+    <p>Gracias por registrarte. En breve nos pondremos en contacto vía WhatsApp.</p>
+    <button onclick="closeModal()">Perfecto</button>
+  </div>
+</div>
+
+<script>
+
+const form = document.getElementById("oxxoForm");
+const modal = document.getElementById("successModal");
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const reingresoValue = document.getElementById("reingreso").value;
+
+  const data = new FormData(form);
+  const params = new URLSearchParams(data).toString();
+
+  fetch("https://script.google.com/macros/s/AKfycbxUp0DPdkkQR396VwwmC_U985DFcCXSYfoYRbKiA3hl402cIz1QcmdFRDUt2vlzXTs-/exec", {
+    method: "POST",
+    body: params,
+    headers: { "Content-Type": "application/x-www-form-urlencoded" }
+  })
+  .then(response => response.text())
+  .then(data => {
+
+    if (reingresoValue !== "Sí") {
+      modal.style.display = "flex";
+
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 3000);
+    }
+
+    form.reset();
+  })
+  .catch(error => {
+    alert("Error al enviar, intenta nuevamente.");
+    console.error(error);
+  });
+});
+
+function closeModal(){
+  modal.style.display = "none";
+}
+
+</script>
 
 </body>
 </html>
