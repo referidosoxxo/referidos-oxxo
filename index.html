@@ -33,13 +33,9 @@ body {
   padding: 25px 20px;
 }
 
-.logo {
-  width: 90px;
-}
+.logo { width: 90px; }
 
-.content {
-  padding: 30px;
-}
+.content { padding: 30px; }
 
 h1 {
   color: #e30613;
@@ -62,7 +58,7 @@ label {
   color: #333;
 }
 
-input[type="text"], select {
+input, select {
   width: 100%;
   padding: 11px;
   margin-top: 5px;
@@ -104,17 +100,17 @@ button:hover {
   line-height: 1.6;
 }
 
-/* MODAL NIVEL PRO */
+/* MODAL GENERAL */
 
 .modal {
   display: none;
   position: fixed;
-  z-index: 999;
   inset: 0;
   background: rgba(0,0,0,0.65);
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px);
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .modal-content {
@@ -124,34 +120,33 @@ button:hover {
   width: 90%;
   max-width: 360px;
   text-align: center;
-  box-shadow: 0 15px 45px rgba(0,0,0,0.35);
-  animation: popUp 0.20s ease;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+  animation: popUp 0.25s ease;
 }
 
 .modal-content h2 {
-  color: #e30613;
   margin-bottom: 10px;
 }
 
 .modal-content p {
   font-size: 14px;
-  color: #333;
   margin-bottom: 20px;
 }
 
 .modal-content button {
-  background-color: #e30613;
   padding: 10px 22px;
   border-radius: 8px;
 }
 
-.modal-content button:hover {
-  background-color: #b2050f;
-}
-
-.check-icon {
+.success-icon {
   font-size: 48px;
   color: #28a745;
+  margin-bottom: 15px;
+}
+
+.error-icon {
+  font-size: 48px;
+  color: #e30613;
   margin-bottom: 15px;
 }
 
@@ -207,34 +202,37 @@ button:hover {
     </form>
 
     <p class="footer-text">
-      Esta página es únicamente para recolectar datos de posibles perfiles para cubrir vacantes en OXXO Hermosillo.
-      No es necesario enviar el formulario más de una vez.
-      No contratamos a menores de edad y es indispensable contar con INE vigente.
+      Esta página es únicamente para recolectar datos de posibles perfiles.
+      No contratamos menores de edad y es indispensable contar con INE vigente.
     </p>
 
   </div>
 </div>
 
-<!-- MODAL -->
-<div id="successModal" class="modal">
+<!-- MODAL DINÁMICO -->
+<div id="modal" class="modal">
   <div class="modal-content">
-    <div class="check-icon">✔</div>
-    <h2>Solicitud enviada con éxito</h2>
-    <p>Gracias por registrarte. En breve nos pondremos en contacto vía WhatsApp.</p>
-    <button onclick="closeModal()">Perfecto</button>
+    <div id="modalIcon"></div>
+    <h2 id="modalTitle"></h2>
+    <p id="modalMessage"></p>
+    <button onclick="closeModal()">Cerrar</button>
   </div>
 </div>
 
 <script>
 
 const form = document.getElementById("oxxoForm");
-const modal = document.getElementById("successModal");
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalMessage = document.getElementById("modalMessage");
+const modalIcon = document.getElementById("modalIcon");
+
+let autoCloseTimer;
 
 form.addEventListener("submit", function(e){
   e.preventDefault();
 
   const reingresoValue = document.getElementById("reingreso").value;
-
   const data = new FormData(form);
   const params = new URLSearchParams(data).toString();
 
@@ -244,17 +242,32 @@ form.addEventListener("submit", function(e){
     headers: { "Content-Type": "application/x-www-form-urlencoded" }
   })
   .then(response => response.text())
-  .then(data => {
+  .then(() => {
 
-    if (reingresoValue !== "Sí") {
-      modal.style.display = "flex";
+    if (reingresoValue === "Sí") {
 
-      setTimeout(() => {
-        modal.style.display = "none";
-      }, 3000);
+      modalIcon.innerHTML = '<div class="error-icon">⚠</div>';
+      modalTitle.textContent = "Atención Postulante";
+      modalTitle.style.color = "#e30613";
+      modalMessage.textContent = "De momento no aceptamos reingresos, pero te tendremos en cuenta en futuras vacantes.";
+
+    } else {
+
+      modalIcon.innerHTML = '<div class="success-icon">✔</div>';
+      modalTitle.textContent = "Solicitud enviada con éxito";
+      modalTitle.style.color = "#28a745";
+      modalMessage.textContent = "Gracias por registrarte. En breve nos pondremos en contacto vía WhatsApp.";
+
     }
 
+    modal.style.display = "flex";
+
+    autoCloseTimer = setTimeout(() => {
+      closeModal();
+    }, 30000); // 30 segundos
+
     form.reset();
+
   })
   .catch(error => {
     alert("Error al enviar, intenta nuevamente.");
@@ -264,6 +277,7 @@ form.addEventListener("submit", function(e){
 
 function closeModal(){
   modal.style.display = "none";
+  clearTimeout(autoCloseTimer);
 }
 
 </script>
