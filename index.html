@@ -93,6 +93,12 @@ button:hover {
   transform: translateY(-2px);
 }
 
+button:disabled {
+  background-color: #999;
+  cursor: not-allowed;
+  transform: none;
+}
+
 .footer-text {
   margin-top: 25px;
   font-size: 11px;
@@ -194,7 +200,7 @@ button:hover {
         <option value="No">No</option>
       </select>
 
-      <button type="submit">Enviar mi solicitud</button>
+      <button type="submit" id="submitBtn">Enviar mi solicitud</button>
 
     </form>
 
@@ -222,6 +228,7 @@ const modal = document.getElementById("modal");
 const modalTitle = document.getElementById("modalTitle");
 const modalMessage = document.getElementById("modalMessage");
 const modalIcon = document.getElementById("modalIcon");
+const submitBtn = document.getElementById("submitBtn");
 
 let autoCloseTimer;
 
@@ -231,22 +238,21 @@ form.addEventListener("submit", function(e){
   const ineValue = document.getElementById("ine").value;
   const reingresoValue = document.getElementById("reingreso").value;
 
-  // 🚨 SI NO TIENE INE → NO ENVÍA A GOOGLE SHEETS
+  // 🚨 BLOQUEO SI NO TIENE INE
   if (ineValue === "No") {
 
-    modalIcon.innerHTML = '<div class="error-icon">⚠</div>';
-    modalTitle.textContent = "Atención Postulante";
-    modalTitle.style.color = "#e30613";
-    modalMessage.textContent = "Es importante ser mayor de 18 años y contar con tu INE vigente para comenzar con tu postulación. Recuerda que tu INE es un documento indispensable y sin él no podremos realizar ninguna contratación.";
+    showModal(
+      "error",
+      "Atención Postulante",
+      "Es importante ser mayor de 18 años y contar con tu INE vigente para comenzar con tu postulación. Sin este documento no podremos realizar ninguna contratación."
+    );
 
-    modal.style.display = "flex";
-
-    autoCloseTimer = setTimeout(() => {
-      closeModal();
-    }, 30000);
-
-    return; // 🔥 AQUÍ SE DETIENE Y NO ENVÍA NADA
+    return;
   }
+
+  // 🔒 BLOQUEAR BOTÓN
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Enviando...";
 
   const data = new FormData(form);
   const params = new URLSearchParams(data).toString();
@@ -260,35 +266,51 @@ form.addEventListener("submit", function(e){
   .then(() => {
 
     if (reingresoValue === "Sí") {
-
-      modalIcon.innerHTML = '<div class="error-icon">⚠</div>';
-      modalTitle.textContent = "Atención Postulante";
-      modalTitle.style.color = "#e30613";
-      modalMessage.textContent = "De momento no aceptamos reingresos, pero te tendremos en cuenta en futuras vacantes.";
-
+      showModal(
+        "error",
+        "Atención Postulante",
+        "De momento no aceptamos reingresos, pero te tendremos en cuenta en futuras vacantes."
+      );
     } else {
-
-      modalIcon.innerHTML = '<div class="success-icon">✔</div>';
-      modalTitle.textContent = "Solicitud enviada con éxito";
-      modalTitle.style.color = "#28a745";
-      modalMessage.textContent = "Gracias por registrarte. En breve nos pondremos en contacto vía WhatsApp.";
-
+      showModal(
+        "success",
+        "Solicitud enviada con éxito",
+        "Gracias por registrarte. En breve nos pondremos en contacto vía WhatsApp."
+      );
     }
 
-    modal.style.display = "flex";
-
-    autoCloseTimer = setTimeout(() => {
-      closeModal();
-    }, 30000);
-
     form.reset();
-
   })
   .catch(error => {
     alert("Error al enviar, intenta nuevamente.");
     console.error(error);
+  })
+  .finally(() => {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Enviar mi solicitud";
   });
+
 });
+
+function showModal(type, title, message) {
+
+  if (type === "success") {
+    modalIcon.innerHTML = '<div class="success-icon">✔</div>';
+    modalTitle.style.color = "#28a745";
+  } else {
+    modalIcon.innerHTML = '<div class="error-icon">⚠</div>';
+    modalTitle.style.color = "#e30613";
+  }
+
+  modalTitle.textContent = title;
+  modalMessage.textContent = message;
+
+  modal.style.display = "flex";
+
+  autoCloseTimer = setTimeout(() => {
+    closeModal();
+  }, 30000);
+}
 
 function closeModal(){
   modal.style.display = "none";
